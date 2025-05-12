@@ -211,7 +211,7 @@ const monsters = [];
 let monsterModel;
 const monsterHoverAmplitude = 1.1;
 const monsterHoverSpeed = 2;
-let playerHealth = 100;
+let playerHealth = 700;
 
 let isGameOver = false
 
