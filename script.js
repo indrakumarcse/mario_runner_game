@@ -1425,7 +1425,7 @@ const fbxLoader = new FBXLoader(loadingManager);
 Promise.all([
     new Promise(resolve => fbxLoader.load('models/Idle.fbx', resolve)),
     new Promise(resolve => fbxLoader.load('models/Running.fbx', resolve)),
-    new Promise(resolve => fbxLoader.load('models/Jumping.fbx', resolve))
+    new Promise(resolve => fbxLoader.load('models/jumping.fbx', resolve))
 ]).then(([idleObject, runObject, jumpObject]) => {
     characterModel = idleObject;
     characterModel.scale.set(0.02, 0.02, 0.02);
