@@ -1847,7 +1847,7 @@ function animation() {
                 createExplosion(bullet.mesh.position.clone());
                 isShaking = true;
                 shakeTime = 0;
-                playerHealth = Math.max(playerHealth - 5, 0); // Lose 20% health
+                playerHealth = Math.max(playerHealth - 7, 0); // Lose 20% health
                 const bulletSound = new Audio('music/bullet.wav');
                 bulletSound.volume = 1.0;
                 bulletSound.play();
