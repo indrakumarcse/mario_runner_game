@@ -3115,7 +3115,7 @@ let animation = () => {
             isJumping = false;
             verticalVelocity = 0;
         
-            if (totalScore > 3000 && coinCount >= 150) {
+            if (totalScore > 300 && coinCount >= 15) {
                 console.log("Score > 3000 and Coins >= 150, proceeding to Level 2...");
 
 
