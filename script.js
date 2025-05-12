@@ -211,7 +211,7 @@ const monsters = [];
 let monsterModel;
 const monsterHoverAmplitude = 1.1;
 const monsterHoverSpeed = 2;
-let playerHealth = 700;
+let playerHealth = 100;
 
 let isGameOver = false
 
@@ -1009,7 +1009,7 @@ function updateMonsters(delta, characterZ) {
             if (characterBox.intersectsBox(monsterBox)) {
                 const currentTime = clock.getElapsedTime();
                 if (monster.lastHitTime === 0 || currentTime - monster.lastHitTime >= hitCooldown) {
-                    playerHealth = Math.max(playerHealth - 10, 0); // Lose 20% health
+                    playerHealth = Math.max(playerHealth - 7, 0); // Lose 20% health
                     const turtleSound = new Audio('music/turtle.wav');
                     turtleSound.volume = 0.5;
                     turtleSound.play();
@@ -1847,7 +1847,7 @@ function animation() {
                 createExplosion(bullet.mesh.position.clone());
                 isShaking = true;
                 shakeTime = 0;
-                playerHealth = Math.max(playerHealth - 10, 0); // Lose 20% health
+                playerHealth = Math.max(playerHealth - 5, 0); // Lose 20% health
                 const bulletSound = new Audio('music/bullet.wav');
                 bulletSound.volume = 1.0;
                 bulletSound.play();
