@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mario FBX Scene</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Bungee&family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas class="webgl"></canvas>
+
+    <div class="loader"></div>
+    <div class="loader-background"></div>
+
+    <div id="start-screen" style="display: none;">
+        <img id="start-image" src="images/gamestart4.jpg" alt="Game Start">
+        <div id="start-text-container">
+            <div id="title-text">To Start</div>
+            <div id="start-text">Click Enter</div>
+        </div>
+    </div>
+    
+
+    <div id="rule-screen" style="display: none;">
+        <div id="level-text">Level-1</div>
+        <img id="text4-image" src="images/text444.jpg" alt="Rule Background">
+        <img id="rule-image" src="images/level1-1.png" alt="Rule Image">
+        <div id="click-enter-text">Click Enter</div>
+    </div>
+
+    <div id="score-display"></div>
+    <div id="top-right-container">
+        <div id="sword-group">
+            <div id="sword-icon-container">
+                <img id="sword-icon" src="images/icon2.png" alt="Sword Icon" style="display: none;">
+            </div>
+            <div id="sword-count">0</div>
+        </div>
+        <div id="lives-display"></div>
+    </div>
+     <button id="fullscreen-button" title="Toggle Fullscreen">Full Screen</button>
+    <div id="collectibles-container">
+        <div id="treasure-display" style="display: none;">
+            <img id="treasure-logo" src="images/treasure.png" alt="Treasure Logo">
+        </div>
+        <div id="potion-display" style="display: none;">
+            <img id="potion-logo" src="images/potion.png" alt="Potion Logo">
+        </div>
+    </div>
+    <div id="total-score-display">Score: 0</div>
+    <div id="score-popups"></div>
+    <div id="diamond-display">
+        <img id="diamond-icon" src="images/diamond_icon1.png" alt="Diamond Icon">
+        <span id="diamond-count">0</span>
+    </div>
+    <div id="health-bar-container" class="health-bar-container">
+        <img id="mario-face" src="images/face2.png" alt="Mario Face">
+        <div class="health-bar"></div>
+        <div class="game-over-text">Game Over!</div>
+    </div>
+    <div class="monster-health-bar-container">
+        <img id="monster-face" src="images/monsterface.png" alt="Monster Face">
+        <div class="monster-health-bar"></div>
+    </div>
+    <div id="ability-icons" class="ability-icons">
+        <img id="fireball-icon" src="images/fireball.png" alt="Fireball Icon">
+        <img id="punch-icon" src="images/punch.png" alt="Punch Icon">
+        <img id="shield-icon" src="images/shield.png" alt="Shield Icon">
+    </div>
+    <div id="game-over-screen" style="display: none;">
+        <p id="final-score">Score: 0</p>
+        <p id="final-coins">Coins: 0</p>
+        <div id="restart-button-wrapper">
+            <button id="restart-button">Restart Game</button>
+        </div>
+    </div>
+    <div id="low-score-game-over-screen" style="display: none;">
+        <p id="low-score-message">Low score and coins</p>
+        <p id="low-score-final-score">Score: 0</p>
+        <p id="low-score-final-coins">Coins: 0</p>
+        <div id="low-score-restart-button-wrapper">
+            <button id="low-score-restart-button">Restart Game</button>
+        </div>
+    </div>
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://unpkg.com/three@0.172.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.172.0/examples/jsm/"
+          }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.js" integrity="sha512-+E0UhA8ib3H5AlREMX1I0mc3R7HMkQYH+hkkfW47aLGMnVJwod+jJ2jxe94xYyUdqPs9AFDHUxKnJzScEP5cmA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+    <script src="main.js" type="module"></script>
+</body>
+</html>

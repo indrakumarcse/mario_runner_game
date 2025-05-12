@@ -1,0 +1,1167 @@
+html, body {
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+canvas.webgl {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+/* 
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loading-container {
+    text-align: center;
+    color: white;
+}
+
+.loading-container h1 {
+    font-family: Arial, sans-serif;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    width: 300px;
+    height: 20px;
+    background: #333;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#loading-progress {
+    width: 0%;
+    height: 100%;
+    background: #00ff00;
+    transition: width 0.3s ease;
+} */
+
+#score-display {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-family: 'Press Start 2P', monospace;
+    font-weight: 400;
+    font-size: 20px;
+    color: #f0efec; /* Warm retro yellow for high visibility */
+    text-shadow: 0 0 8px rgba(255, 234, 167, 0.8), 1px 1px 0 #000; /* Matching yellow glow with black offset */
+    letter-spacing: 1.5px;
+    background: rgba(30, 30, 50, 0.7); /* Dark blue-tinted background for contrast */
+    padding: 10px 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 10;
+}
+
+#top-right-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 10;
+}
+
+#sword-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#lives-display {
+    display: flex;
+    gap: 5px;
+    font-family: 'Press Start 2P', monospace;
+    font-weight: 400;
+    font-size: 20px; /* Smaller than 32px for balance with heart icons */
+    color: #ff6b6b;
+    text-shadow: 0 0 8px rgba(255, 107, 107, 0.8), 1px 1px 0 #000; /* Slightly reduced shadow for smaller text */
+    letter-spacing: 1px; /* Adjusted for smaller text */
+    z-index: 10;
+}
+
+.heart-icon {
+    width: 25px;
+    height: 25px;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+#sword-icon-container {
+    display: flex;
+    align-items: center;
+    order: 1;
+}
+
+#sword-icon {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+#sword-count {
+    position: absolute;
+    top: 45px;
+    color: white;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 2px 8px;
+    border-radius: 5px;
+    display: none;
+    z-index: 10;
+}
+
+#total-score-display {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Press Start 2P', monospace;
+    font-weight: 400;
+    font-size: 24px;
+    color: #f8f7f6;
+    text-shadow: 0 0 8px rgba(255, 234, 167, 0.8), 1px 1px 0 #000;
+    letter-spacing: 1.5px;
+    background: rgba(30, 30, 50, 0.7);
+    padding: 10px 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 10;
+}
+
+#score-popups {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Prevents interaction with the container */
+    z-index: 20; /* Matches .score-popup z-index */
+}
+
+.score-popup {
+    position: absolute;
+    color: yellow;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+    text-shadow: 1px 1px 2px black;
+    pointer-events: none;
+    z-index: 20;
+}
+
+
+
+
+#diamond-display {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(30, 30, 50, 0.9), rgba(10, 10, 20, 0.85));
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(100, 150, 255, 0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(100, 150, 255, 0.1);
+    color: #e0e7ff;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    z-index: 10;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#diamond-display:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 0 12px rgba(100, 150, 255, 0.2);
+}
+
+#diamond-icon {
+    width: 28px;
+    height: 28px;
+    margin-right: 10px;
+    filter: drop-shadow(0 0 4px rgba(100, 150, 255, 0.5));
+    animation: pulse 2s infinite ease-in-out;
+}
+
+#diamond-count {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 5px rgba(100, 150, 255, 0.7);
+}
+
+/* Keyframes for subtle pulse animation on the diamond icon */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.9;
+    }
+}
+
+
+
+
+.health-bar-container {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 38vw;
+    max-width: 380px;
+    height: 36px;
+    background: linear-gradient(135deg, #1a0b3b 0%, #2a1b5b 100%);
+    border: 2px solid rgba(100, 150, 255, 0.8);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    padding: 6px 6px 6px 44px; /* Matches existing padding for Mario face */
+    z-index: 999;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), inset 0 0 6px rgba(100, 150, 255, 0.3);
+    animation: gradient-shift 5s ease-in-out infinite;
+    transition: transform 0.2s ease;
+}
+
+.health-bar-container:hover {
+    transform: translateX(-50%) scale(1.02);
+}
+
+#mario-face {
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2.5px solid rgba(150, 200, 255, 0.9);
+    box-shadow: 0 0 10px rgba(100, 150, 255, 0.6), inset 0 0 5px rgba(255, 255, 255, 0.3);
+    z-index: 1000;
+    animation: mario-bounce 2s ease-in-out infinite;
+    object-fit: cover;
+}
+
+.health-bar {
+    width: 100%; /* Starts at 100% of container (minus padding) */
+    height: 24px;
+    background: linear-gradient(135deg, #00ff00, #00cc00);
+    border-radius: 12px;
+    box-shadow: 0 0 6px rgba(0, 255, 0, 0.5), inset 0 0 3px rgba(255, 255, 255, 0.2);
+    transition: width 0.4s ease; /* Smooth width transition */
+    animation: pulse-bar 2.5s infinite ease-in-out;
+}
+
+.game-over-text {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    color: #ff0000;
+    font-size: 26px;
+    font-weight: 700;
+    font-family: 'Poppins', Arial, sans-serif;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.7), 2px 2px 4px rgba(0, 0, 0, 0.5);
+    animation: game-over-glow 1.5s infinite alternate ease-in-out;
+    z-index: 1002;
+}
+
+
+@keyframes game-over-glow {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        text-shadow: 0 0 8px rgba(255, 0, 0, 0.7), 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.1);
+        text-shadow: 0 0 12px rgba(255, 0, 0, 1), 2px 2px 6px rgba(0, 0, 0, 0.7);
+    }
+}
+
+
+
+
+/* Collectibles Container */
+#collectibles-container {
+    position: fixed; /* Changed to fixed for consistent positioning in fullscreen */
+    top: 30px; /* Responsive top position, matches original */
+    left: 170px; /* Responsive right position, matches original */
+    display: flex;
+    align-items: center;
+    gap: 3rem; /* Modernized unit, equivalent to ~32px, slightly reduced for compactness */
+    z-index: 1000; /* Increased for prominence over other UI elements */
+    pointer-events: none; /* Prevents container from blocking clicks */
+}
+
+/* Treasure and Potion Displays */
+#treasure-display,
+#potion-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+        135deg,
+        rgba(30, 30, 50, 0.95), /* Slightly more opaque for better contrast */
+        rgba(10, 10, 20, 0.9)
+    );
+    padding: 0.5rem; /* Modernized unit, equivalent to 8px, slightly increased for balance */
+    border-radius: 10px; /* Slightly larger for smoother look */
+    border: 1px solid rgba(100, 150, 255, 0.4); /* Increased opacity for visibility */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for depth */
+    transition: transform 0.2s ease, opacity 0.3s ease; /* Smooth hover/visibility transitions */
+    pointer-events: auto; /* Allows interaction with icons */
+}
+
+/* Hover effect for interactivity */
+#treasure-display:hover,
+#potion-display:hover {
+    transform: scale(1.1); /* Subtle zoom on hover */
+    opacity: 0.9; /* Slight fade for feedback */
+}
+
+/* Treasure and Potion Icons */
+#treasure-logo,
+#potion-logo {
+    width: 2rem; /* Modernized unit, equivalent to 32px, slightly larger for clarity */
+    height: 2rem;
+    object-fit: contain; /* Ensures icons scale properly without distortion */
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3)); /* Adds subtle shadow for icon pop */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    #collectibles-container {
+        top: clamp(60px, 8vw, 70px); /* Adjusted for smaller screens */
+        right: clamp(30px, 4vw, 40px);
+        gap: 1.5rem; /* Reduced gap for compactness */
+    }
+
+    #treasure-logo,
+    #potion-logo {
+        width: 1.5rem; /* Smaller icons for mobile */
+        height: 1.5rem;
+    }
+
+    #treasure-display,
+    #potion-display {
+        padding: 0.4rem; /* Slightly reduced padding */
+        border-radius: 8px; /* Revert to smaller radius for mobile */
+    }
+}
+
+
+
+
+
+.monster-health-bar-container {
+    position: fixed;
+    top: 30px;
+    right: 60px; /* Adjusted to align with #collectibles-container and avoid overlap */
+    width: 38vw;
+    max-width: 380px;
+    height: 36px;
+    background: linear-gradient(135deg, #3b0b1a 0%, #5b1b2a 100%); /* Dark red gradient for monster theme */
+    border: 2px solid rgba(255, 100, 100, 0.8); /* Red-themed border */
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    padding: 6px 6px 6px 44px; /* Matches player's padding for face */
+    z-index: 999;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), inset 0 0 6px rgba(255, 100, 100, 0.3);
+    animation: gradient-shift 5s ease-in-out infinite;
+    transition: transform 0.2s ease;
+}
+
+.monster-health-bar-container:hover {
+    transform: scale(1.02); /* Matches player's hover effect */
+}
+
+#monster-face {
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2.5px solid rgba(255, 150, 150, 0.9); /* Red-themed border */
+    box-shadow: 0 0 10px rgba(255, 100, 100, 0.6), inset 0 0 5px rgba(255, 255, 255, 0.3);
+    z-index: 1000;
+    animation: mario-bounce 2s ease-in-out infinite; /* Reuse player's bounce animation */
+    object-fit: cover;
+}
+
+.monster-health-bar {
+    width: 100%; /* Starts at 100% of container (minus padding) */
+    height: 24px;
+    background: linear-gradient(135deg, #ff4500, #cc3700); /* Orange-red gradient */
+    border-radius: 12px;
+    box-shadow: 0 0 6px rgba(255, 69, 0, 0.5), inset 0 0 3px rgba(255, 255, 255, 0.2);
+    transition: width 0.4s ease; /* Smooth width transition */
+    animation: pulse-bar 2.5s infinite ease-in-out; /* Reuse player's pulse animation */
+}
+
+
+
+
+.ability-icons {
+    position: absolute;
+    top: 80px;
+    left: 80px;
+    display: flex;
+    gap: 90px;
+    z-index: 10;
+}
+#fireball-icon, #shield-icon, #punch-icon {
+    width: 40px;
+    height: 40px;
+    visibility: hidden; /* Initially hidden, reserves space */
+}
+
+
+
+
+
+#game-over-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('images/gameover6.png') no-repeat center center/100% auto;
+    background-color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.8s ease-in-out;
+    padding-bottom: 80px;
+    padding-left: 0;
+    box-sizing: border-box;
+}
+
+#final-score, #final-coins, #final-diamonds {
+    font-family: 'Press Start 2P', monospace;
+    font-weight: 400;
+    font-size: 28px;
+    color: #ffeaa7;
+    text-shadow: 0 0 10px rgba(255, 234, 167, 0.8), 2px 2px 0 #000;
+    margin: 8px 0;
+    letter-spacing: 2px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px 25px;
+    border-radius: 8px;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#final-diamonds {
+    transform: translate(-10px, -35px);
+}
+
+#restart-button {
+    font-family: 'Bungee', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    padding: 15px 45px;
+    background: linear-gradient(45deg, #ff2e63, #ff6b6b);
+    color: #ffffff;
+    border: 3px solid #ffeaa7;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 40px;
+    margin-left: 1px;
+    box-shadow: 0 5px 15px rgba(255, 46, 99, 0.6);
+    animation: toggleSize 2.5s ease-in-out infinite;
+}
+
+#restart-button:hover {
+    background: linear-gradient(45deg, #ff6b6b, #ff2e63);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 46, 99, 0.8);
+}
+
+#restart-button:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(255, 46, 99, 0.4);
+}
+
+#restart-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+#low-score-game-over-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('images/gameover6.png') no-repeat center center/100% auto;
+    background-color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.8s ease-in-out;
+    padding-bottom: 40px;
+    padding-left: 0;
+    box-sizing: border-box;
+}
+
+#low-score-message {
+    font-family: 'Press Start 2P', monospace;
+    font-weight: 400;
+    font-size: 32px;
+    color: #ff6b6b;
+    text-shadow: 0 0 10px rgba(255, 107, 107, 0.8), 2px 2px 0 #000;
+    margin: 12px 0;
+    letter-spacing: 2px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 12px 25px;
+    border-radius: 8px;
+    width: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#low-score-final-score, #low-score-final-coins {
+    font-family: 'Press Start 2P', monospace;
+    font-weight: 400;
+    font-size: 28px;
+    color: #ffeaa7;
+    text-shadow: 0 0 10px rgba(255, 234, 167, 0.8), 2px 2px 0 #000;
+    margin: 8px 0;
+    letter-spacing: 2px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px 25px;
+    border-radius: 8px;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#low-score-restart-button {
+    font-family: 'Bungee', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    padding: 15px 45px;
+    background: linear-gradient(45deg, #ff2e63, #ff6b6b);
+    color: #ffffff;
+    border: 3px solid #ffeaa7;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 40px;
+    margin-left: 1px;
+    box-shadow: 0 5px 15px rgba(255, 46, 99, 0.6);
+    animation: toggleSize 2.5s ease-in-out infinite;
+}
+
+#low-score-restart-button:hover {
+    background: linear-gradient(45deg, #ff6b6b, #ff2e63);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 46, 99, 0.8);
+}
+
+#low-score-restart-button:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(255, 46, 99, 0.4);
+}
+
+#low-score-restart-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes toggleSize {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+
+
+
+
+#potion-not-collected-game-over-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('images/gameover6.png') no-repeat center center/100% auto;
+    background-color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.8s ease-in-out;
+    padding-bottom: 80px;
+    padding-left: 0;
+    box-sizing: border-box;
+}
+
+#potion-not-collected-message {
+    font-family: 'Press Start 2P', monospace;
+    font-weight: 400;
+    font-size: 32px;
+    color: #ff6b6b;
+    text-shadow: 0 0 10px rgba(255, 107, 107, 0.8), 2px 2px 0 #000;
+    margin: 12px 0;
+    letter-spacing: 2px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 12px 25px;
+    border-radius: 8px;
+    width: 750px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#potion-not-collected-final-diamonds {
+    font-family: 'Press Start 2P', monospace;
+    font-weight: 400;
+    font-size: 28px;
+    color: #ffeaa7;
+    text-shadow: 0 0 10px rgba(255, 234, 167, 0.8), 2px 2px 0 #000;
+    margin: 8px 0;
+    letter-spacing: 2px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px 25px;
+    border-radius: 8px;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#potion-not-collected-restart-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#potion-not-collected-restart-button {
+    font-family: 'Bungee', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    padding: 15px 45px;
+    background: linear-gradient(45deg, #ff2e63, #ff6b6b);
+    color: #ffffff;
+    border: 3px solid #ffeaa7;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    margin-left: 1px;
+    box-shadow: 0 5px 15px rgba(255, 46, 99, 0.6);
+    animation: toggleSize 2.5s ease-in-out infinite;
+}
+
+#potion-not-collected-restart-button:hover {
+    background: linear-gradient(45deg, #ff6b6b, #ff2e63);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 46, 99, 0.8);
+}
+
+#potion-not-collected-restart-button:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(255, 46, 99, 0.4);
+}
+
+
+#fullscreen-button {
+    position: fixed;
+    top: 88px;
+    right: 180px;
+    background: linear-gradient(45deg, #ff2e63, #ff6b6b); /* Matches restart-button gradient */
+    color: #ffffff;
+    font-family: 'Bungee', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    border: 2px solid #ffeaa7; /* Matches restart-button border */
+    border-radius: 8px;
+    padding: 10px 25px;
+    cursor: pointer;
+    z-index: 999; /* Matches game-over-screen, above health bars */
+    transition: transform 0.2s ease, background 0.3s ease;
+    box-shadow: 0 3px 10px rgba(255, 46, 99, 0.4);
+}
+
+#fullscreen-button:hover {
+    background: linear-gradient(45deg, #ff6b6b, #ff2e63); /* Reverse gradient on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 46, 99, 0.6);
+}
+
+#fullscreen-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(255, 46, 99, 0.3);
+}
+
+/* Ensure UI elements remain visible in fullscreen */
+/* :fullscreen .health-bar-container,
+:fullscreen .monster-health-bar-container,
+:fullscreen .ability-icons {
+    display: flex !important;
+    visibility: visible !important;
+} */
+
+/* Vendor prefix for Safari */
+/* :-webkit-full-screen .health-bar-container,
+:-webkit-full-screen .monster-health-bar-container,
+:-webkit-full-screen .ability-icons {
+    display: flex !important;
+    visibility: visible !important;
+} */
+
+
+
+#win-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+#win-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.win-line {
+    position: absolute;
+    height: 150px; /* Thickness of the lines */
+    width: 0; /* Start with zero width for animation */
+    top: 50%; /* Center vertically, will be adjusted for spacing */
+    right: -100%; /* Start off-screen to the right */
+    z-index: 1001; /* Above the win-screen image */
+    transform: translateY(-50%); /* Center vertically */
+}
+
+.white-line {
+    background-color: white;
+    top: calc(50% - 140px); /* Position above center for top of rectangle */
+}
+
+.black-line {
+    background-color: black;
+    top: calc(50% + 10px); /* Position below center for bottom of rectangle */
+}
+
+/* Animation for the lines */
+@keyframes slideIn {
+    0% {
+        width: 0;
+        right: -100%;
+    }
+    100% {
+        width: 1300px; /* Width of the rectangle */
+        right: 35%; /* Stop at center */
+        transform: translateX(50%); /* Adjust to center the rectangle */
+    }
+}
+
+.white-line.animate {
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+.black-line.animate {
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+.win-text {
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif; /* Tall, narrow, bold Mario-style font */
+    font-size: 210px; /* Adjusted to fit 150px rectangle height */
+    font-style: italic; /* Italicized style */
+    text-align: center;
+    z-index: 1002; /* Above the win-lines */
+    opacity: 0; /* Start invisible for slide-in */
+    width: 1000px; /* Match rectangle width */
+    right: -100%; /* Start off-screen right */
+    text-transform: uppercase; /* Ensure all caps */
+    letter-spacing: 2px; /* Slight spacing for sleek look */
+}
+
+.mario-text {
+    color: black;
+    top: calc(50% - 130px); /* Align with white rectangle */
+    line-height: 150px; /* Center vertically in rectangle */
+}
+
+.wins-text {
+    color: red;
+    top: calc(50% + 20px); /* Align with black rectangle */
+    line-height: 150px; /* Center vertically in rectangle */
+}
+
+@keyframes slideInTextMario {
+    0% {
+        right: -100%;
+        opacity: 0;
+    }
+    100% {
+        right: 35%; /* Match mario-text final position */
+        transform: translateX(50%); /* Center horizontally */
+        opacity: 1;
+    }
+}
+
+@keyframes slideInTextWins {
+    0% {
+        right: -100%;
+        opacity: 0;
+    }
+    100% {
+        right: 44%; /* Match wins-text final position */
+        transform: translateX(60%); /* Adjust centering */
+        opacity: 1;
+    }
+}
+
+.mario-text.animate {
+    animation: slideInTextMario 0.3s ease-out forwards; /* Match line animation timing */
+}
+
+.wins-text.animate {
+    animation: slideInTextWins 0.3s ease-out forwards; /* Match line animation timing */
+}
+
+#win-screen .mario-image {
+    position: absolute;
+    width: 779px; /* Larger size */
+    height: 779px; /* Maintain aspect ratio */
+    object-fit: contain; /* Ensure image fits within bounds */
+    z-index: 1001; /* Above wins6.png and rectangles, below text */
+    top: 100%; /* Start off-screen at bottom */
+    right: 75%; /* Match white rectangle and mario-text */
+    transform: translateX(50%); /* Center horizontally */
+    opacity: 0; /* Start invisible for fade-in */
+}
+
+@keyframes slideUp {
+    0% {
+        top: 100%;
+        opacity: 0;
+    }
+    100% {
+        top: 55%; /* Stop at vertical center */
+        transform: translateX(50%) translateY(-50%); /* Center vertically */
+        opacity: 1;
+    }
+}
+
+#win-screen .mario-image.animate {
+    animation: slideUp 0.5s ease-in forwards 0.3s; /* Match text animation timing */
+}
+
+.win-restart-button-wrapper {
+    position: absolute;
+    bottom: 15%;
+    left: 65%;
+    transform: translateX(-50%);
+    z-index: 1003;
+    opacity: 0; /* Initial state for GSAP animation */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.win-restart-button {
+    font-family: 'Bungee', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    padding: 15px 45px;
+    background: linear-gradient(45deg, #6a1b9a, #ab47bc);
+    color: #ffffff;
+    border: 3px solid #ffeaa7;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(106, 27, 154, 0.6);
+    animation: toggleSize 2.5s ease-in-out infinite;
+}
+
+.win-restart-button:hover {
+    background: linear-gradient(45deg, #ab47bc, #6a1b9a);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(106, 27, 154, 0.8);
+}
+
+.win-restart-button:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(106, 27, 154, 0.4);
+}
+
+@keyframes toggleSize {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+
+
+
+.loader-background {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: #ffffff; /* Stable white full-screen background */
+    z-index: 1000; /* Below loader, above canvas */
+    display: none; /* Hidden by default, toggled by JS */
+}
+.loader {
+    width: fit-content;
+    font-size: 34px;
+    font-family: monospace;
+    line-height: 1.4;
+    font-weight: bold;
+    padding: 60px 4px 100px;
+    background: linear-gradient(#000 0 0) 0 0/100% 100% content-box padding-box no-repeat;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1010; /* Above loader-background */
+    animation: l10-0 2s infinite cubic-bezier(1,175,.5,175);
+    display: none; /* Hidden by default, toggled by JS */
+}
+.loader::before {
+    content: "Loading";
+    display: inline-block;
+    animation: l10-2 2s infinite;
+}
+.loader::after {
+    content: "";
+    position: absolute;
+    width: 68px;
+    height: 56px;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background:
+        linear-gradient(90deg,#0000 24px,#f92033 0 44px,#0000 0 52px,#fdc98d 0 64px,#0000) bottom 52px left 50%,
+        linear-gradient(90deg,#0000 20px,#f92033 0 56px,#fdc98d 0 64px,#0000 0) bottom 48px left 50%,
+        linear-gradient(90deg,#0000 20px,#643700 0 32px,#fdc98d 0 40px,#000 0 44px,#fdc98d 0 48px,#000 0 52px,#f92033 0 64px,#0000 0) bottom 44px left 50%,
+        linear-gradient(90deg,#0000 16px,#643700 0 20px,#fdc98d 0 24px,#643700 0 28px,#fdc98d 0 40px,#000 0 44px,#fdc98d 0 56px,#f92033 0 64px,#0000 0) bottom 40px left 50%,
+        linear-gradient(90deg,#0000 16px,#643700 0 20px,#fdc98d 0 24px,#643700 0 32px,#fdc98d 0 44px,#000 0 48px,#fdc98d 0 60px,#f92033 0 64px,#0000 0) bottom 36px left 50%,
+        linear-gradient(90deg,#0000 16px,#643700 0 24px,#fdc98d 0 40px,#000 0 56px,#f92033 0 60px,#0000 0) bottom 32px left 50%,
+        linear-gradient(90deg,#0000 24px,#fdc98d 0 52px,#f92033 0 60px,#0000 0) bottom 28px left 50%,
+        linear-gradient(90deg,#fdc98d 12px,#f92033 0 28px,#222a87 0 32px,#f92033 0 44px,#222a87 0 48px,#f92033 0 56px,#0000 0 64px,#643700 0) bottom 24px left 50%,
+        linear-gradient(90deg,#fdc98d 12px,#f92033 0 32px,#222a87 0 36px,#f92033 0 48px,#f92033 0 52px,#0000 0 60px,#643700 0) bottom 20px left 50%,
+        linear-gradient(90deg,#0000 20px,#f92033 0 32px,#222a87 0 48px,#feee49 0 52px,#222a87 0 60px, #643700 0) bottom 16px left 50%,
+        linear-gradient(90deg,#0000 24px,#222a87 0 36px,#feee49 0 40px,#222a87 0 60px,#643700 0) bottom 12px left 50%,
+        linear-gradient(90deg,#0000 16px,#643700 0 24px,#222a87 0 60px,#643700 0) bottom 8px left 50%,
+        linear-gradient(90deg,#0000 12px,#643700 0 28px,#222a87 0 52px,#0000 0) bottom 4px left 50%,
+        linear-gradient(90deg,#0000 12px,#643700 0 20px,#0000 0) bottom 0px left 50%;
+    background-size: 68px 4px;
+    background-repeat: no-repeat;
+    animation: inherit;
+    animation-name: l10-1;
+}
+@keyframes l10-0 {
+    0%,30%   { background-position: 0 0px }
+    50%,100% { background-position: 0 -0.1px }
+}
+@keyframes l10-1 {
+    50%,100% { top: 109.5% }
+}
+@keyframes l10-2 {
+    0%,30%   { transform: translateY(0); }
+    80%,100% { transform: translateY(-260%); }
+}
+
+
+
+
+
+#start-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 105%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    z-index: 1010;
+}
+
+#start-image {
+    max-width: 100%;
+    max-height: 120%;
+    object-fit: contain;
+}
+
+#start-text-container {
+    position: absolute;
+    right: 5%; /* Aligns container to the right side */
+    top: 55%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Right-align text within the container */
+}
+
+#title-text {
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 28px;
+    text-shadow: 2px 2px 4px black;
+    margin-bottom: 10px;
+    margin-right: 20px; /* Shifts title text left */
+}
+
+#start-text {
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 24px;
+    text-shadow: 2px 2px 4px black;
+}
+
+
+
+
+#rule-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#text4-image {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    left: 1px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#rule-image {
+    width: 35%;
+    height: auto;
+    position: absolute;
+    right: 200px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#click-enter-text {
+    position: absolute;
+    bottom: 60px;
+    right: 330px;
+    color: white;
+    font-size: 24px;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+
+#level-text {
+    position: absolute;
+    right: 360px;
+    top: 50px;
+    color: white;
+    font-size: 30px;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    z-index: 1;
+}
+
+
+
+
+/* Display screen styling */
+.display-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.display-screen img {
+    width: 300px; /* Small size, adjust as needed */
+    height: auto;
+    object-fit: contain;
+}
