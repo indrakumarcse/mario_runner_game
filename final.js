@@ -822,7 +822,7 @@ const fbxLoader = new FBXLoader(loadingManager);
 Promise.all([
     new Promise(resolve => fbxLoader.load('models/Idle.fbx', resolve)),
     new Promise(resolve => fbxLoader.load('models/Running.fbx', resolve)),
-    new Promise(resolve => fbxLoader.load('models/Jumping.fbx', resolve)),
+    new Promise(resolve => fbxLoader.load('models/jumping.fbx', resolve)),
     new Promise(resolve => fbxLoader.load('models/Punching2.fbx', resolve)),
     new Promise(resolve => {
         const gltfLoader = new GLTFLoader(loadingManager);
