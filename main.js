@@ -18,7 +18,7 @@ let introMusic = null;
 
 const ruleScreen = document.getElementById('rule-screen');
 const ruleImage = document.getElementById('rule-image');
-const ruleImages = ['images/level1-1.png', 'images/level1-2.png', 'images/level1-3.png'];
+const ruleImages = ['images/level1-1.png', 'images/level1-2.png', 'images/level1-33.png'];
 let currentRuleIndex = 0;
 
 function showRuleScreen() {
@@ -206,7 +206,7 @@ let monsterModel;
 let monsterSpeed = originalMonsterSpeed;; // Same speed as Goombas for consistency
 const monsterSpawnDistance = 15; // Distance between monster spawns
 let lastMonsterZ = 0; // Track the last spawned monster's Z position
-const maxMonsters = 20; // Maximum number of monsters in the scene
+const maxMonsters = 10; // Maximum number of monsters in the scene
 
 const swordProjectiles = [];
 
@@ -217,7 +217,7 @@ let heartModel;
 
 const clouds = [];
 let cloudModel;
-const cloudSpawnDistance = 20;
+const cloudSpawnDistance = 10;
 let lastCloudZ = 0;
 
 const coins = [];
@@ -635,7 +635,7 @@ function updateCharacterOpacity(opacity) {
 
 function createCoins() {
     return new Promise((resolve) => {
-        const totalCoins = 267; // Reduced from 400 to achieve maxWorldZ ≈ 800
+        const totalCoins = 134; // Reduced from 400 to achieve maxWorldZ ≈ 800
         const startZ = 10;
         const coinsOnBricksPercentage = 0.7;
 
@@ -751,8 +751,8 @@ function createGiftBoxes() {
 
                     const brickStartZ = 15;
                     const platformSpacing = 10;
-                    const totalPlatforms = 60;
-                    const giftBoxCount = 14;
+                    const totalPlatforms = 30;
+                    const giftBoxCount = 7;
                     const giftBoxHeight = 4.5;
                     const brickWidth = 0.57 * 5;
                     const minGap = brickWidth + 2;
@@ -1077,7 +1077,7 @@ function createBricks() {
 function createBrickPlatforms() {
     const startZ = 15;
     const platformSpacing = 10;
-    const totalPlatforms = 80; // Reduced from 120 to fit maxWorldZ ≈ 800
+    const totalPlatforms = 40; // Reduced from 120 to fit maxWorldZ ≈ 800
     
     for (let i = 0; i < totalPlatforms; i++) {
         const zPosition = startZ + i * platformSpacing;
@@ -1171,7 +1171,7 @@ function spawnClouds(characterZ) {
     const cloudXMax = 40;
     const minZ = characterZ - 20;
     const maxZ = Math.min(characterZ + 200, maxWorldZ);
-    const maxClouds = 120;
+    const maxClouds = 60;
 
     if (lastCloudZ === 0) lastCloudZ = minZ;
 
@@ -1227,8 +1227,8 @@ function spawnGoombas(characterZ) {
 
     const minZ = Math.max(characterZ + 10, lastGoombaZ); // Start spawning closer to character
     const maxZ = Math.min(characterZ + 200, maxWorldZ); // Look ahead range
-    const maxGoombas = 300; // Increased from 20 to 30 for more Goombas
-    const goombaSpawnDistance = 20; // Reduced from 15 to 10 for denser spawning
+    const maxGoombas = 100; // Increased from 20 to 30 for more Goombas
+    const goombaSpawnDistance = 15; // Reduced from 15 to 10 for denser spawning
 
     if (lastGoombaZ === 0) lastGoombaZ = characterZ + goombaSpawnDistance;
 
@@ -1415,7 +1415,7 @@ function spawnMonsters(characterZ) {
 
     const minZ = Math.max(characterZ + 10, lastMonsterZ);
     const maxZ = Math.min(characterZ + 200, maxWorldZ);
-    const maxMonsters = 40;
+    const maxMonsters = 10;
     const pipeBufferDistance = 8.5; // Minimum distance from pipe edge (adjust as needed)
 
     const availableBricks = bricks.filter(brick => 
@@ -1577,7 +1577,7 @@ function spawnPipesAndPlants(characterZ) {
 
     const minZ = Math.max(characterZ - 20, maxZReached - 20);
     const maxZ = Math.min(characterZ + 200, maxWorldZ);
-    const maxPipes = 16;
+    const maxPipes = 8;
     const pipeWidth = 2;
     const minHeight = 1;
     const maxHeight = 3;
@@ -2674,9 +2674,9 @@ Promise.all([
     .then(() => createCoins())
     .then(() => {
         console.log(`Before creating castle, maxWorldZ is: ${maxWorldZ}`);
-        speedStageDistance1 = 133;
-        speedStageDistance2 = 267;
-        speedStageDistance3 = 600;
+        speedStageDistance1 = 67;
+        speedStageDistance2 = 133;
+        speedStageDistance3 = 300;
         console.log(`speedStageDistance1 set to: ${speedStageDistance1}`);
         console.log(`speedStageDistance2 set to: ${speedStageDistance2}`);
         console.log(`speedStageDistance3 set to: ${speedStageDistance3}`);
@@ -3115,7 +3115,7 @@ let animation = () => {
             isJumping = false;
             verticalVelocity = 0;
         
-            if (totalScore > 3000 && coinCount >= 150) {
+            if (totalScore > 1500 && coinCount >= 70) {
                 console.log("Score > 3000 and Coins >= 150, proceeding to Level 2...");
 
 
