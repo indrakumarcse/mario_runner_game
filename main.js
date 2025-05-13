@@ -126,9 +126,9 @@ if (fullscreenButton) {
 
 
 
-document.getElementById('diamond-display')?.style.setProperty('display', 'none');
-document.getElementById('health-bar-container').style.display = 'none';
-document.querySelector('.monster-health-bar-container').style.display = 'none';
+// document.getElementById('diamond-display')?.style.setProperty('display', 'none');
+// document.getElementById('health-bar-container').style.display = 'none';
+// document.querySelector('.monster-health-bar-container').style.display = 'none';
 
 const world = new CANNON.World();
 world.gravity.set(0, -9.82, 0);
